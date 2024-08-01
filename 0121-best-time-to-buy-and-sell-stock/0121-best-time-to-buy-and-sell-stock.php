@@ -15,9 +15,15 @@ class Solution {
 
         // search the highest margins
         $margin = 0;
+        $last   = null;
 
         foreach ($prices as $key => $price)
         {
+            if (!is_null($last) && $price >= $last)
+            {
+                continue;
+            }
+
             $slice = array_slice($prices, ($key + 1));
 
             if (empty($slice))
@@ -32,6 +38,9 @@ class Solution {
             {
                 $margin = $diff;
             }
+
+            // input to last
+            $last = $price;
         }
 
         // count the diffs
