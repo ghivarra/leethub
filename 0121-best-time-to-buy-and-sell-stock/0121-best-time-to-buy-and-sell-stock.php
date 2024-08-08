@@ -5,10 +5,7 @@ class Solution {
      * @return Integer
      */
     function maxProfit($prices) {
-        $tmpPrices = $prices;
-        rsort($tmpPrices);
-
-        if (empty($prices) OR ($prices === $tmpPrices))
+        if (empty($prices))
         {
             return 0;
         }
@@ -17,31 +14,16 @@ class Solution {
         $margin = 0;
         $last   = null;
 
-        foreach ($prices as $key => $price)
-        {
-            if (!is_null($last) && $price >= $last)
-            {
-                continue;
-            }
+        // search for the minimum
+        $min    = min($prices);
+        $minKey = array_keys($prices, $min);
+        $minKey = $minKey[0];
 
-            $slice = array_slice($prices, ($key + 1));
-
-            if (empty($slice))
-            {
-                break;
-            }
-
-            $max  = max($slice);
-            $diff = $max - $price;
-
-            if ($diff > $margin)
-            {
-                $margin = $diff;
-            }
-
-            // input to last
-            $last = $price;
-        }
+        // search for the maximum after minimum
+        $slice = array_slice($prices, ($minKey + 1));
+        
+        // count margin
+        $margin = empty($slice) ? 0 : max($slice) - $min;
 
         // count the diffs
         return $margin;
