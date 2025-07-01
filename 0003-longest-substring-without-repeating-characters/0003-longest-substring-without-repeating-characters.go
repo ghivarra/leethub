@@ -6,23 +6,15 @@ func lengthOfLongestSubstring(s string) int {
 	stringCount := 0
 
 	// foreach
-	var parts []string
 	x := 0
 	for x < len(inputs) {
 
-		// set data to be iterated
-		if x == 0 {
-			parts = inputs
-		} else {
-			parts = inputs[x:]
-		}
-
-		if len(parts) < stringCount {
+		if len(inputs[x:]) < stringCount {
 			break
 		}
 
 		// iterate parts
-		for _, char := range parts {
+		for _, char := range inputs[x:] {
 
 			// if there is copy
 			// then empty tmpchars and break
@@ -43,8 +35,6 @@ func lengthOfLongestSubstring(s string) int {
 		// increment x
 		x++
 	}
-
-	fmt.Println(tmpChars)
 
 	// return
 	return stringCount
