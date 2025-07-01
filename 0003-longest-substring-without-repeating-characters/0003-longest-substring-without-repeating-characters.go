@@ -6,32 +6,45 @@ func lengthOfLongestSubstring(s string) int {
 	stringCount := 0
 
 	// foreach
-	i := 0
-	for i < len(inputs) {
+	var parts []string
+	x := 0
+	for x < len(inputs) {
 
-		if len(inputs[i:]) < stringCount {
+		// set data to be iterated
+		if x == 0 {
+			parts = inputs
+		} else {
+			parts = inputs[x:]
+		}
+
+		if len(parts) < stringCount {
 			break
 		}
 
-		for _, char := range inputs[i:] {
+		// iterate parts
+		for _, char := range parts {
+
+			// if there is copy
+			// then empty tmpchars and break
 			if slices.Contains(tmpChars, char) {
-				if len(tmpChars) > stringCount {
-					stringCount = len(tmpChars)
-				}
-				tmpChars = []string{char}
-				continue
+				tmpChars = []string{}
+				break
 			}
+
+			// add to tmp chars
 			tmpChars = append(tmpChars, char)
+
+			// if larger than count now then add
+			if len(tmpChars) > stringCount {
+				stringCount = len(tmpChars)
+			}
 		}
 
-		i++
+		// increment x
+		x++
 	}
 
 	fmt.Println(tmpChars)
-
-	if len(tmpChars) > stringCount {
-		stringCount = len(tmpChars)
-	}
 
 	// return
 	return stringCount
